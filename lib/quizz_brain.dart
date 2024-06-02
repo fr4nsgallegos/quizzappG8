@@ -18,6 +18,10 @@ class QuizBrain {
     return questionList[questionIndex].answer;
   }
 
+  String getAnswerNumber() {
+    return (questionIndex + 1).toString();
+  }
+
   void nextQuestion() {
     if (questionIndex < questionList.length - 1) {
       questionIndex++;
