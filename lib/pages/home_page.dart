@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class HomePage extends StatelessWidget {
   List<Map<String, dynamic>> questionsList = [
@@ -37,7 +38,33 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: MaterialButton(
                   minWidth: double.infinity,
-                  onPressed: () {},
+                  onPressed: () {
+                    Alert(
+                        context: context,
+                        type: AlertType.error,
+                        title: "QuizApp",
+                        desc: "Esta es la descipción dl quizz",
+                        buttons: [
+                          DialogButton(child: Text("ok"), onPressed: () {}),
+                          DialogButton(child: Text("ok"), onPressed: () {}),
+                          DialogButton(child: Text("ok"), onPressed: () {}),
+                        ]).show();
+                    // showDialog(
+                    //   context: context,
+                    //   builder: (BuildContext context) {
+                    //     return AlertDialog(
+                    //       title: Text("Alerta"),
+                    //       content: Text("Hola este es el cuerpo de la alerta"),
+                    //       actions: [
+                    //         TextButton(
+                    //           onPressed: () {},
+                    //           child: Text("OK"),
+                    //         )
+                    //       ],
+                    //     );
+                    //   },
+                    // );
+                  },
                   color: Colors.greenAccent,
                   child: Text("Verdadero"),
                 ),
