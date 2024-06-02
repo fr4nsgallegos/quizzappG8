@@ -12,16 +12,49 @@ class _HomePageState extends State<HomePage> {
   List<Widget> score = [];
 
   void checkAnwer(bool userAnswer, String numberQuestion) {
-    bool correctAnswer = quizBrain.getQuestionAnswer();
-    if (correctAnswer == userAnswer) {
-      score.add(itemScore(numberQuestion, true));
-      print("Si es correcto");
+    if (quizBrain.isFinished() == true) {
+      Alert(
+          context: context,
+          type: AlertType.error,
+          title: "QuizApp",
+          desc: "El cuestionario ha llegado a su fin",
+          buttons: [
+            DialogButton(
+                child: Text("Aceptar"),
+                onPressed: () {
+                  quizBrain.restarQuizz();
+                  score.clear();
+                  Navigator.pop(context);
+                  setState(() {});
+                }),
+          ]).show();
+      // // showDialog(
+      // //   context: context,
+      // //   builder: (BuildContext context) {
+      // //     return AlertDialog(
+      // //       title: Text("Alerta"),
+      // //       content: Text("Hola este es el cuerpo de la alerta"),
+      // //       actions: [
+      // //         TextButton(
+      // //           onPressed: () {},
+      // //           child: Text("OK"),
+      // //         )
+      // //       ],
+      // //     );
+      // //   },
+      // // );
     } else {
-      score.add(itemScore(numberQuestion, false));
-      print("INCORRECTO");
+      bool correctAnswer = quizBrain.getQuestionAnswer();
+      if (correctAnswer == userAnswer) {
+        score.add(itemScore(numberQuestion, true));
+        print("Si es correcto");
+      } else {
+        score.add(itemScore(numberQuestion, false));
+        print("INCORRECTO");
+      }
+      quizBrain.nextQuestion();
+      setState(() {});
     }
-    quizBrain.nextQuestion();
-    setState(() {});
   }
 
   Widget itemScore(String numberQuestion, bool isCorrect) {
@@ -72,31 +105,6 @@ class _HomePageState extends State<HomePage> {
                   minWidth: double.infinity,
                   onPressed: () {
                     checkAnwer(true, quizBrain.getAnswerNumber());
-                    // Alert(
-                    //     context: context,
-                    //     type: AlertType.error,
-                    //     title: "QuizApp",
-                    //     desc: "Esta es la descipción dl quizz",
-                    //     buttons: [
-                    //       DialogButton(child: Text("ok"), onPressed: () {}),
-                    //       DialogButton(child: Text("ok"), onPressed: () {}),
-                    //       DialogButton(child: Text("ok"), onPressed: () {}),
-                    //     ]).show();
-                    // // showDialog(
-                    // //   context: context,
-                    // //   builder: (BuildContext context) {
-                    // //     return AlertDialog(
-                    // //       title: Text("Alerta"),
-                    // //       content: Text("Hola este es el cuerpo de la alerta"),
-                    // //       actions: [
-                    // //         TextButton(
-                    // //           onPressed: () {},
-                    // //           child: Text("OK"),
-                    // //         )
-                    // //       ],
-                    // //     );
-                    // //   },
-                    // // );
                   },
                   color: Colors.greenAccent,
                   child: Text("Verdadero"),

@@ -27,4 +27,19 @@ class QuizBrain {
       questionIndex++;
     }
   }
+
+  bool isFinished() {
+    // if (questionIndex > questionList.length - 1) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+    print(questionIndex);
+    print(questionList.length - 1);
+    return questionIndex > questionList.length - 2 ? true : false;
+  }
+
+  void restarQuizz() {
+    questionIndex = 0;
+  }
 }
