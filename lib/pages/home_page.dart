@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:quizz_app/quizz_brain.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-class HomePage extends StatelessWidget {
-  List<Map<String, dynamic>> questionsList = [
-    {"question": "¿El hombre llegó a la luna?", "asnwer": true},
-    {"question": "¿Has almorzado hoy?", "asnwer": false},
-    {"question": "¿Sientes frio?", "asnwer": false},
-    {"question": "¿Saliste ayer?", "asnwer": false},
-    {"question": "¿Has desayunado?", "asnwer": true},
-  ];
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  QuizBrain quizBrain = QuizBrain();
+
+  void checkAnwer(bool userAnswer) {
+    bool correctAnswer = quizBrain.getQuestionAnswer();
+    if (correctAnswer == userAnswer) {
+      print("Si es correcto");
+    } else {
+      print("INCORRECTO");
+    }
+    quizBrain.nextQuestion();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +37,7 @@ class HomePage extends StatelessWidget {
               flex: 5,
               child: Center(
                 child: Text(
-                  "Esta es la pregunta",
+                  quizBrain.getQuestionText(),
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.white, fontSize: 22),
                 ),
@@ -39,31 +50,32 @@ class HomePage extends StatelessWidget {
                 child: MaterialButton(
                   minWidth: double.infinity,
                   onPressed: () {
-                    Alert(
-                        context: context,
-                        type: AlertType.error,
-                        title: "QuizApp",
-                        desc: "Esta es la descipción dl quizz",
-                        buttons: [
-                          DialogButton(child: Text("ok"), onPressed: () {}),
-                          DialogButton(child: Text("ok"), onPressed: () {}),
-                          DialogButton(child: Text("ok"), onPressed: () {}),
-                        ]).show();
-                    // showDialog(
-                    //   context: context,
-                    //   builder: (BuildContext context) {
-                    //     return AlertDialog(
-                    //       title: Text("Alerta"),
-                    //       content: Text("Hola este es el cuerpo de la alerta"),
-                    //       actions: [
-                    //         TextButton(
-                    //           onPressed: () {},
-                    //           child: Text("OK"),
-                    //         )
-                    //       ],
-                    //     );
-                    //   },
-                    // );
+                    checkAnwer(true);
+                    // Alert(
+                    //     context: context,
+                    //     type: AlertType.error,
+                    //     title: "QuizApp",
+                    //     desc: "Esta es la descipción dl quizz",
+                    //     buttons: [
+                    //       DialogButton(child: Text("ok"), onPressed: () {}),
+                    //       DialogButton(child: Text("ok"), onPressed: () {}),
+                    //       DialogButton(child: Text("ok"), onPressed: () {}),
+                    //     ]).show();
+                    // // showDialog(
+                    // //   context: context,
+                    // //   builder: (BuildContext context) {
+                    // //     return AlertDialog(
+                    // //       title: Text("Alerta"),
+                    // //       content: Text("Hola este es el cuerpo de la alerta"),
+                    // //       actions: [
+                    // //         TextButton(
+                    // //           onPressed: () {},
+                    // //           child: Text("OK"),
+                    // //         )
+                    // //       ],
+                    // //     );
+                    // //   },
+                    // // );
                   },
                   color: Colors.greenAccent,
                   child: Text("Verdadero"),
@@ -76,7 +88,9 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: MaterialButton(
                   minWidth: double.infinity,
-                  onPressed: () {},
+                  onPressed: () {
+                    checkAnwer(false);
+                  },
                   color: Colors.redAccent,
                   child: Text("false"),
                 ),
